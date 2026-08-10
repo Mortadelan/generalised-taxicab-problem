@@ -39,15 +39,21 @@ void populate_grid(int mod, int grid[][mod], int *fifth) {
 
 /*
   print_grid: print, line by line, the grid given by the 2D array grid[][mod]
+  and also the fifth power residues of the grid
  */
-void print_grid(int mod, int grid[][mod]) {
+void print_grid(int mod, int grid[][mod], int fifth[mod]) {
   int x, y;
+  for (x = 0; x < mod; x++)
+	printf("%2d ", fifth[x]);
+  printf("\n");
+  printf("\n");
   for (x = 0; x < mod; x++) {
 	for (y = 0; y < mod; y++) {
 	  printf("%2d ", grid[x][y]);
 	}
 	printf("\n");
   }
+  printf("\n");
 }
 
 /*
@@ -127,7 +133,7 @@ void generate_img(int mod) {
 
   calc_pow5_residues(fifth, mod);
   populate_grid(mod, grid, fifth);
-  print_grid(mod, grid);
+  print_grid(mod, grid, fifth);
 
   int row_width = (((digits(mod) + 1) * 3) + 1) * mod + 50;
   char img[mod + 3][row_width];
