@@ -104,8 +104,8 @@ void write_img(
 	return;
   }
 
-  for (int i = 0; y < mod + 3; y++)
-	fputs(img[y], fp);
+  for (int i = 0; i < mod + 3; i++)
+	fputs(img[i], fp);
 
   fclose(fp);
 }
