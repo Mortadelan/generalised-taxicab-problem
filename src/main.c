@@ -12,7 +12,7 @@ int main(void) {
   populate_grid(mod, grid, fifth);
   print_grid(mod, grid);
 
-  int row_width = ((((digits(mod) + 1) * 3) + 1) * mod) + 1;
+  int row_width = (((digits(mod) + 1) * 3) + 1) * mod + 10;
   char img[mod + 3][row_width];
   populate_header(mod, row_width, img);
   grid_to_img(mod, row_width, img, grid);
