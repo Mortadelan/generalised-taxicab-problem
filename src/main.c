@@ -17,5 +17,7 @@ int main(void) {
   populate_header(mod, row_width, img);
   grid_to_img(mod, row_width, img, grid);
 
+  write_img(mod, row_width, img);
+
   return 0;
 }
