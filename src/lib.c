@@ -78,16 +78,21 @@ void grid_to_img(
 {
   for (int y = 0; y < mod; y++) {
 	int pos = 0;
-	for (int x = 3; x < mod; x++) {
+	for (int x = 0; x < mod; x++) {
 	  pos += snprintf(
 	    &img[y + 3][pos],
 	    row_width - pos,
-	    " %d %d %d",
+	    "%d %d %d ",
 	    grid[y][x],
 	    grid[y][x],
 	    grid[y][x]
 	  );
 	}
+	pos += snprintf(
+      &img[y + 3][pos],
+      row_width - pos,
+      "\n"
+	);
   }
 }
 
