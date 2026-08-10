@@ -42,9 +42,7 @@ void populate_grid(int mod, int grid[][mod], int *fifth) {
  */
 void print_grid(int mod, int grid[][mod]) {
   int x, y;
-  printf("   x\n");
   for (x = 0; x < mod; x++) {
-	printf(" y ");
 	for (y = 0; y < mod; y++) {
 	  printf("%2d ", grid[x][y]);
 	}
@@ -96,7 +94,9 @@ void grid_to_img(
   }
 }
 
-
+/*
+  write_img: writes a 2D array into a file named after the mod value
+ */
 void write_img(
   int mod,
   int row_width,
@@ -117,6 +117,10 @@ void write_img(
   fclose(fp);
 }
 
+/*
+  generate_img: generates a 2D grid and a PPM image of that 2D grid
+  the grid is a sum table of the fifth power residues of a given modulus
+ */
 void generate_img(int mod) {
   int fifth[mod];
   int grid[mod][mod];
@@ -125,10 +129,17 @@ void generate_img(int mod) {
   populate_grid(mod, grid, fifth);
   print_grid(mod, grid);
 
-  int row_width = (((digits(mod) + 1) * 3) + 1) * mod + 5;
+  int row_width = (((digits(mod) + 1) * 3) + 1) * mod + 50;
   char img[mod + 3][row_width];
   populate_header(mod, row_width, img);
   grid_to_img(mod, row_width, img, grid);
 
   write_img(mod, row_width, img);
 }
+
+/*
+  count_colours: count what will become colours, but in actuality we're counting occourances of numbers within a grid
+
+void count_colours(int mod, int grid[][mod]) {
+}
+ */
