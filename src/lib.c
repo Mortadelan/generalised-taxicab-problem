@@ -91,13 +91,21 @@ void grid_to_img(
   }
 }
 
-/*
-  I don't really know how to do IO yet so I'll write this tomorrow
+
 void write_img(
   int mod,
   int row_width,
   char img[mod + 3][row_width],
 {
+  FILE *fp = fopen("img.ppm", "w");
 
+  if (fp == NULL) {
+	perror("couldn't open img.ppm");
+	return;
+  }
+
+  for (int i = 0; y < mod + 3; y++)
+	fputs(img[y], fp);
+
+  fclose(fp);
 }
-*/
