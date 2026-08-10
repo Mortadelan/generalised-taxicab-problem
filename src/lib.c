@@ -102,7 +102,9 @@ void write_img(
   int row_width,
   char img[mod + 3][row_width])
 {
-  FILE *fp = fopen("img.ppm", "w");
+  char name[16];
+  sprintf(name, "mod%d.ppm", mod);
+  FILE *fp = fopen(name, "w");
 
   if (fp == NULL) {
 	perror("couldn't open img.ppm");
