@@ -95,7 +95,7 @@ void grid_to_img(
 void write_img(
   int mod,
   int row_width,
-  char img[mod + 3][row_width],
+  char img[mod + 3][row_width])
 {
   FILE *fp = fopen("img.ppm", "w");
 
