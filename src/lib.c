@@ -21,15 +21,17 @@ int pow5(int x) {
 /*
   calculate i^5 modulus mod
  */
-void calc_pow5_residues(int *fifth, int mod) {
-  for (int i = 0; i < mod; i++)
+void calc_pow5_residues(int fifth[], int mod) {
+  int i;
+  for (i = 0; i < mod; i++)
 	fifth[i] = pow5(i) % mod;
+  fifth[i] = '\0';
 }
 
 /*
   populate_grid: populate grid with sums of fifth power residues, modulus mod
  */
-void populate_grid(int mod, int grid[][mod], int *fifth) {
+void populate_grid(int mod, int grid[][mod], int fifth[]) {
   for (int x = 0; x < mod; x++) {
 	for (int y = 0; y < mod; y++) {
 	  grid[x][y] = (fifth[x] + fifth[y]) % mod;
@@ -38,21 +40,104 @@ void populate_grid(int mod, int grid[][mod], int *fifth) {
 }
 
 /*
-  print_grid: print, line by line, the grid given by the 2D array grid[][mod]
-  and also the fifth power residues of the grid
+  arilen: return the length of an integer array
+ */
+int arilen(int *a) {
+  int i;
+  for (i = 1; a[i] != 0; i++)
+	;
+  return i;
+}
+
+/*
+  findset: finds unique integers in array a[] and puts them inside b[],
+  by order of appearance
+ */
+int findset(int a_size, int a[], int b[]) {
+  int b_size = 0;
+  for (int i = 0; i < a_size; i++) {
+	int same = 0;
+	for (int j = 0; j < b_size; j++) {
+	  if (a[i] == b[j]) {
+		same = 1;
+		break;
+	  }
+	}
+	if (!same) {
+	  b[b_size] = a[i];
+	  b_size++;
+	}
+  }
+  return b_size;
+}
+/*
+  gridset: finds unique integers in 2D array grid[size][size] and puts them inside
+  unq[], by order of appearance.  assumes b is of size size**size at least.
+*/
+int gridset(
+  int size,
+  int grid[size][size],
+  int unq[size * size])
+{
+  int i, j, k;
+  int n = 0;
+  for (i = 0; i < size; i++) {
+	for (j = 0; j < size; j++) {
+	  int same = 0;
+
+	  for (k = 0; k < n; k++) {
+		if (grid[i][j] == unq[k]) {
+		  same = 1;
+		  break;
+		}
+	  }
+	  if (!same) {
+		unq[n] = grid[i][j];
+		n++;
+	  }
+	}
+  }
+  return n;
+}
+/*
+  histogram: generate a histogram from grid[][mod] and put it inside hist[]
+
+void histogram(int mod, int grid[][mod], int fifth[], int hist[]) {
+}
+ */
+/*
+  collision_heatmap: generate a grid which colours a cell according to how many other
+  cells have the same value
+
+void collision_heatmap(int mod, int grid[][mod], int fifth[], hist[]) {
+}
+ */
+/*
+  print_grid: print information about the given grid:
+    - its fifth power residues
+	- the grid itself
  */
 void print_grid(int mod, int grid[][mod], int fifth[mod]) {
   int x, y;
+  printf("mod = %i:\n", mod);
+  for (y = 0; y < mod; y++) {
+	for (x = 0; x < mod; x++) {
+	  printf("%2d ", grid[y][x]);
+	}
+	printf("\n");
+  }
+  printf("\n");
+  printf("fifth powers:\n");
   for (x = 0; x < mod; x++)
 	printf("%2d ", fifth[x]);
   printf("\n");
   printf("\n");
-  for (x = 0; x < mod; x++) {
-	for (y = 0; y < mod; y++) {
-	  printf("%2d ", grid[x][y]);
-	}
-	printf("\n");
-  }
+  printf("unique numbers in grid:\n");
+  int unq[mod * mod];
+  int n = gridset(mod, grid, unq);
+  for (x = 0; x < n; x++)
+	printf("%2d ", unq[x]);
+  printf("\n");
   printf("\n");
 }
 
@@ -142,10 +227,3 @@ void generate_img(int mod) {
 
   write_img(mod, row_width, img);
 }
-
-/*
-  count_colours: count what will become colours, but in actuality we're counting occourances of numbers within a grid
-
-void count_colours(int mod, int grid[][mod]) {
-}
- */
